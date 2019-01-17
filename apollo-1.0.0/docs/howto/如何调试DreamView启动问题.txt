@@ -1,0 +1,23 @@
+如何调试DreamView启动问题
+启动DreamView的步骤
+如果在“docker/scripts/dev”序列中启动DreamView时遇到问题，请首先检查是否使用了如下所示的正确命令。
+bash
+$ bash docker/scripts/dev_start.sh
+$ bash docker/scripts/dev_into.sh
+$ cd /apollo
+$ bash apollo.sh build
+$ bash scripts/dreamview.sh
+DreamView无法启动
+如果DreamView无法启动，请使用下面的脚本检查DreamView启动日志并重新启动DreamView。
+bash
+检查DreamView启动日志
+$ cat data/log/dreamview.out
+在引发“civetException”实例后调用Terminate
+what（）：构造civetserver时上下文为空。绑定到端口可能有问题。
+$ sudo apt-get install psmisc
+检查DreamView是否从其他终端运行
+$ sudo lsof -i :8888
+终止其他正在运行/挂起的DreamView
+$ sudo fuser -k 8888/tcp
+重新启动DreamView
+$ bash scripts/dreamview.sh

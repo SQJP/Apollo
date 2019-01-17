@@ -1,0 +1,52 @@
+构建和发布
+* [1. Install Docker](#docker)
+* [2. Build and Release](#build_release)
+* [3. Test](#test)
+<span id="docker">Install Docker</span>
+建造阿波罗号的系统要求是Ubuntu 14.04。Docker容器是为Apollo项目建立构建环境的最简单方法。详细的Docker教程是[这里]（https://docs.docker.com/）。
+```bash
+sudo docker/scripts/install_docker.sh
+```
+<span id="build_release">Build and Release</span>
+启动容器
+我们提供一个名为*dev latest*的构建映像。容器将把您的本地Apollo repo安装到*/Apollo*上。
+```bash
+bash docker/scripts/dev_start.sh
+```
+进入容器
+```bash
+bash docker/scripts/dev_into.sh
+```
+建立模型
+```bash
+bash apollo.sh build
+```
+释放二进制文件
+```bash
+bash apollo.sh release
+```
+这将生成一个发布目录，其中包含ROS环境、运行脚本、二进制文件和相关共享库（.so文件）。
+要创建不包括专有软件（如ESD CAN库）的版本，请执行以下操作：
+```bash
+bash apollo.sh release_noproprietary
+```
+生成发布图像
+```bash
+bash apollo_docker.sh gen
+```
+这将使用发布目录创建一个新的Docker映像。发布图像将命名为*release-yyyymmdd_hhmm*。同时，您最新构建的图像将标记为“release-latest”。**Docker发布需要在容器外部执行。
+推送Docker镜像
+```bash
+bash apollo_docker.sh push
+```
+该命令会将您最新发布的Docker映像推送到Docker Hub。
+<span id="test">Test</span>
+```bash
+bash docker/scripts/release_start.sh [release tag]
+```
+*HMI*将自动启动，您可以通过任何Web浏览器输入IP地址和端口号来控制每个Apollo模块，例如*localhost:8887*。如果需要快速修复，您可以进入释放容器。
+```bash
+bash docker/scripts/release_into.sh
+```
+法律免责声明
+您构建的Docker映像可能包含由ESD Electronics（以下简称为ESD）提供的ESD CAN库文件，您应该通过与ESD的许可协议获得这些文件。许可协议应授予您（作为个人或企业实体）使用ESD提供的上述软件的权利；但是，您可能（并且可能需要）需要ESD明确的重新分发许可，以发布Docker图像，供任何其他第三方使用。此类许可协议仅在您和ESD之间签订，不包含在Apollo项目的许可条款中（请参阅Apollo Top目录下的文件许可）。

@@ -1,0 +1,128 @@
+如何添加新的CAN卡
+介绍
+控制器局域网（CAN）是许多微控制器和设备中集中使用的一种网络，无需主机的协助，即可在设备之间传输数据。
+Apollo中使用的默认CAN卡是ESD CAN-PIC卡。您可以使用以下步骤添加新的CAN卡。
+添加新的CAN卡
+完成以下所需的任务序列以添加新的CAN卡：
+*实现新CAN卡的“canclient”类。
+*在“canclientfactory”中注册新的can卡。
+*更新配置文件。
+下面的示例演示如何添加新的CAN卡——例如CAN卡。
+实现新CAN卡的CANClient类
+使用以下代码实现特定的“canclient”类：
+```cpp
+#include <string>
+#include <vector>
+
+#include "hermes_can/include/bcan.h"
+#include "modules/canbus/can_client/can_client.h"
+#include "modules/canbus/common/canbus_consts.h"
+#include "modules/common/proto/error_code.pb.h"
+
+/**
+ * @namespace apollo::canbus::can
+ * @brief apollo::canbus::can
+ */
+namespace apollo {
+namespace canbus {
+namespace can {
+
+/**
+ * @class ExampleCanClient
+ * @brief The class which defines a Example CAN client which inherits CanClient.
+ */
+class ExampleCanClient : public CanClient {
+ public:
+  /**
+   * @brief Initialize the Example CAN client by specified CAN card parameters.
+   * @param parameter CAN card parameters to initialize the CAN client.
+   * @return If the initialization is successful.
+   */
+  bool Init(const CANCardParameter& parameter) override;
+
+  /**
+   * @brief Destructor
+   */
+  virtual ~ExampleCanClient() = default;
+
+  /**
+   * @brief Start the Example CAN client.
+   * @return The status of the start action which is defined by
+   *         apollo::common::ErrorCode.
+   */
+  apollo::common::ErrorCode Start() override;
+
+  /**
+   * @brief Stop the Example CAN client.
+   */
+  void Stop() override;
+
+  /**
+   * @brief Send messages
+   * @param frames The messages to send.
+   * @param frame_num The amount of messages to send.
+   * @return The status of the sending action which is defined by
+   *         apollo::common::ErrorCode.
+   */
+  apollo::common::ErrorCode Send(const std::vector<CanFrame>& frames,
+                                 int32_t* const frame_num) override;
+
+  /**
+   * @brief Receive messages
+   * @param frames The messages to receive.
+   * @param frame_num The amount of messages to receive.
+   * @return The status of the receiving action which is defined by
+   *         apollo::common::ErrorCode.
+   */
+  apollo::common::ErrorCode Receive(std::vector<CanFrame>* const frames,
+                                    int32_t* const frame_num) override;
+
+  /**
+   * @brief Get the error string.
+   * @param status The status to get the error string.
+   */
+  std::string GetErrorString(const int32_t status) override;
+
+ private:
+  ...
+  ...
+};
+
+}  // namespace can
+}  // namespace canbus
+}  // namespace apollo
+```
+在CanClientFactory中注册新的CAN卡
+将以下代码添加到“canclientfactory”中：
+```cpp
+void CanClientFactory::RegisterCanClients() {  
+  Register(CANCardParameter::ESD_CAN, 
+           []() -> CanClient* { return new can::EsdCanClient(); });  
+  
+  // register the new CAN card here.  
+  Register(CANCardParameter::EXAMPLE_CAN,  
+           []() -> CanClient* { return new can::ExampleCanClient(); });  
+}  
+```
+更新配置文件
+将EXAMPLE_CAN添加到“/modules/canbus/proto/can-card”参数中。
+```proto
+message CANCardParameter {
+  enum CANCardBrand {
+    FAKE_CAN = 0;
+    ESD_CAN = 1;
+    EXAMPLE_CAN = 2; // add new CAN card here.
+  }
+  ... ... 
+}
+```
+更新 `/modules/canbus/conf/canbus_conf.pb.txt`
+```txt
+... ... 
+  can_card_parameter {
+  brand:EXAMPLE_CAN
+  type: PCI_CARD // suppose the new can card is PCI_CARD
+  channel_id: CHANNEL_ID_ZERO // suppose the new can card has CHANNEL_ID_ZERO
+}
+... ...
+```

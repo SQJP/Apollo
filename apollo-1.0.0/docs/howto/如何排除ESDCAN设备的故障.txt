@@ -1,0 +1,12 @@
+如何排除ESD CAN设备的故障？
+问题
+无法通过ESD CAN卡进行通信。
+故障排除步骤：
+1。确保已加载CAN驱动程序（内核模块），运行：`` lsmod grep can```；如果已加载CAN驱动程序，则应查看有关内核驱动程序的信息，如版本号。
+2。确保CAN设备存在并且设置了正确的权限，运行：``ls-l/dev/can0``。
+三。检查内核日志（run``dmesg grep-i can`````）和系统日志（run```grep-i can/var/log/syslog`````），查看是否有与CAN相关的错误消息。
+4。运行apollo程序“esdcan-test-app”（位于“monitor/hw monitor/hw/tools/````下），它将打印出详细的统计信息和状态信息。
+*若要了解此工具，请运行“esdcan-test-app-help”。
+*要打印更详细的统计信息，请运行`` sudo esdcan_test_app--details=true``。
+5。可选：保存内核日志、系统日志（步骤4）和步骤5的输出以进行脱机分析。
+6。如有必要，检查系统环境温度。ESD CAN卡（CAN PCIe/402-FD）的工作温度范围为0-75摄氏度，不在该温度范围内工作。您还可以将温度传感器连接到ESD CAN（Altera FPGA芯片）上的主IC芯片表面，以监测芯片的表面温度，确保其不会过热。

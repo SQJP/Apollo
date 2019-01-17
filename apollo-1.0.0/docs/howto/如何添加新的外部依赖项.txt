@@ -1,0 +1,10 @@
+如何添加新的外部依赖项
+设计和实现的目标是最小化必须预先安装在系统中的依赖关系。如果您的目标依赖于必须先运行“apt-get-install”的模块，请考虑使用bazel作为包/依赖关系管理系统。
+例如，如果要添加最初不是用bazel生成的工作区规则“foo”，请执行以下操作：
+-在工作区文件中添加名为“foo”的工作区规则。
+-指定“foo”（通常是URL）的源和版本（通常是commit hash或git tag）。
+-在第三方目录下写一个“foo.build”来构建它。构建文件将类似于您自己目标的任何其他bazel构建文件。
+-在依赖于“foo”的目标中，将“@foo://：<foo\u target>”放入其依赖项中。
+使用bazel添加外部依赖项
+如果使用bazel添加工作区规则“foo”来构建目标，则bazel将根据“foo”从指定的源中提取“foo”的源代码，并使用“foo.build”构建它。如果“foo”最初是用bazel构建的，那么只需要构建工作区规则。
+单击以下链接可获得有关添加Bazel依赖项的更详细说明：[工作区规则]（https://bazel.build/versions/master/docs/be/workspace.html）[处理外部依赖项]（处理外部依赖项）。
