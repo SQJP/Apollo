@@ -1,78 +1,14 @@
-# Apollo
+<<<<<<< HEAD
+百度Apollo是一个开源的无人驾驶平台，是国内外在该领域的佼佼者。Apollo向汽车行业及自动驾驶领域的合作伙伴提供一个开放、完整、安全的软件平台，帮助他们结合车辆和硬件系统，快速搭建一套属于自己的完整的自动驾驶系统。
+Apollo1.0也被称为自动GPS导航点，它在一个封闭的场所如测试轨道或停车场工作，它准确地再现了一个人类驾驶员在一个封闭的、平坦的地面上行驶的轨迹和轨迹的速度。 
+本项目主要工作是对Apollo1.0进行研究并进行实车部署，工作内容为：
+1.学习Apollo1.0的体系结构，撰写Apollo1.0体系结构说明文档。
+2.翻译指导文档，以便日后查阅。
+3.记录会把搭建过程中遇到的问题，并提供解决方案文档。
+4.按照modules中模块化划分，撰写每一模块的代码说明，包括该模块的作用，主要数据处理函数，输入输出接口，关键技术等。
+5.撰写Apollo1.0软硬件构建文档。
+6.撰写Apollo1.0搭建的详细过程。
+希望我们共同努力，实现了Apollo1.0封闭场地无人驾驶。
+=======
+>>>>>>> fbeaab89357e66d756e59da92da007bde97db7eb
 
-```
-We choose to go to the moon in this decade and do the other things,
-not because they are easy, but because they are hard.
--- John F. Kennedy, 1962
-```
-
-Welcome to the Apollo GitHub.
-
-[Apollo](http://apollo.auto) is an open autonomous driving platform. It is a high performance flexible architecture which supports fully autonomous driving capabilities.
-
-
-## Installation
-
-We strongly recommend building Apollo in our pre-specified Docker environment.
-See the following instructions on how to set up the docker environment and build from source.
-
-### The docker environment can be set by the commands below.
-
-```
-bash docker/scripts/install_docker.sh
-bash docker/scripts/dev_start.sh
-bash docker/scripts/dev_into.sh
-```
-### To build from source
-
-```
-bash apollo.sh build
-```
-
-## Run Apollo
-Follow the steps below to launch Apollo:
-### Start Apollo
-```
-# start Human Machine Interface(HMI)
-bash scripts/hmi.sh
-```
-### Access HMI
-Access HMI by openning your favorite browser, e.g. Chrome, go to http://localhost:8887, click Dreamview to start.
-![HMI Enable Dreamview](docs/demo_guide/images/dreamview_enable.png)
-
-
-Click upper-right Dreamview button
-![HMI Launch Dreamview](docs/demo_guide/images/dreamview_launch.png)
-
-to load Dreamview UI.
-
-![Open Dreamview](docs/quickstart/images/hmi_open_dreamview.png)
-
-### Replay demo rosbag
-```
-# in a different terminal inside docker
-rosbag play -l ./docs/demo_guide/demo.bag
-```
-Dreamview should show a running vehicle with trajectory now.
-![Dreamview with Trajectory](docs/demo_guide/images/dv_trajectory.png)
-
-Advanced users who wish to build outside this Docker container can refer
-to the corresponding Docker specification file (`./docker/dev.dockerfile`).
-
-## Documents
-Apollo documents can be found under the [docs](https://github.com/ApolloAuto/apollo/blob/master/docs/) repository.
-   * [quickstart](https://github.com/ApolloAuto/apollo/blob/master/docs/quickstart/): the quickstart tutorial.
-   * [demo_guide](https://github.com/ApolloAuto/apollo/blob/master/docs/demo_guide/): the guide for demonstration.
-   * [how to contribute code](https://github.com/ApolloAuto/apollo/blob/master/docs/howto/how_to_contribute_code.md): the guide for contributing code to Apollo.
-   * [howto](https://github.com/ApolloAuto/apollo/blob/master/docs/howto/): tutorials on how to build, run and modify codes.
-   * [specs](https://github.com/ApolloAuto/apollo/blob/master/docs/specs/): Specification documents of Apollo 1.0.
-
-## Ask Questions
-
-You are welcome to submit questions and bug reports as [Github Issues](https://github.com/ApolloAuto/apollo/issues).
-
-## Copyright and License
-Apollo is provided under the [Apache-2.0 license](LICENSE).
-
-## Disclaimer
-Please refer the Disclaimer of Apollo in [Apollo official website](http://apollo.auto).

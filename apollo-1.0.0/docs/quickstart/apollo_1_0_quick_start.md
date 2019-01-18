@@ -18,8 +18,12 @@
 * [Run Offline Demo](#run-offline-demo)
 
 # About This Guide
+<<<<<<< HEAD
+
+=======
 #关于Apollo1.0的指导
 #_Apollo 1.0快速入门指南_提供了理解，安装和构建Apollo的所有基本说明。
+>>>>>>> dd36c0306bbdcf30a478fc3db13e6bc5531ec812
 The _Apollo 1.0 Quick Start Guide_ provides all of the basic instructions to understand, install, and build Apollo.
 
 ## Document Conventions
