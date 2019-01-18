@@ -8,6 +8,6 @@ Apollo1.0也被称为自动GPS导航点，它在一个封闭的场所如测试�
   5.撰写Apollo1.0软硬件构建文档。  
   6.撰写Apollo1.0搭建的详细过程。  
 希望通过我们的共同努力，实现了Apollo1.0封闭场地无人驾驶。  
-(apollo-1.0.0/docs/demo_guide/images/虚拟场景.png)
+(apollo-1.0.0/docs/demo_guide/images/dreamview_enable.png)
 
 
