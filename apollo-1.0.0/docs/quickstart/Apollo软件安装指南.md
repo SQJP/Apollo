@@ -53,6 +53,6 @@ bash scripts/hmi.sh
 在另一个终端里输入：
 rosbag play -l ./docs/demo_guide/demo.bag
 然后就可以看到界面播放demo.bag数据啦：
-![tupian](docs/demo_guide/images/dv_trajectory.png)
+![tupian](images/dv_trajectory.png)
 当然，这只是播放录像而已，要搭建一个真实的无人车所需要的硬件诸如工业电脑IPC、GPS、IMU、CANBUS卡等
 
