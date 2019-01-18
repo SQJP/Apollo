@@ -1,0 +1,138 @@
+如何添加一个新车辆
+介绍
+下面的说明演示了如何向Apollo添加新车辆。
+*注：*阿波罗控制算法是为默认车辆配置的，它是林肯MKZ。
+添加新车辆时，如果您的车辆需要与阿波罗控制算法提供的属性不同，请考虑：
+-使用适合您车辆的不同控制算法。
+-修改现有算法参数以获得更好的结果。
+添加新车辆
+完成以下任务序列以添加新车辆：
+*实施新的车辆控制器。
+*实现新的消息管理器。
+*实施新车工厂。
+*更新配置文件。
+实施新的车辆控制器
+新的车辆控制器继承自“VehicleController”类。下面提供了一个示例头文件。
+```cpp
+/**
+ * @class NewVehicleController
+ *
+ * @brief this class implements the vehicle controller for a new vehicle.
+ */
+class NewVehicleController final : public VehicleController {
+ public:
+  /**
+   * @brief initialize the new vehicle controller.
+   * @return init error_code
+   */
+  ::apollo::common::ErrorCode Init(
+      const VehicleParameter& params, CanSender* const can_sender,
+      MessageManager* const message_manager) override;
+
+  /**
+   * @brief start the new vehicle controller.
+   * @return true if successfully started.
+   */
+  bool Start() override;
+
+  /**
+   * @brief stop the new vehicle controller.
+   */
+  void Stop() override;
+
+  /**
+   * @brief calculate and return the chassis.
+   * @returns a copy of chassis. Use copy here to avoid multi-thread issues.
+   */
+  Chassis chassis() override;
+
+  // more functions implemented here
+  ...
+
+};
+```
+实现新的消息管理器
+新的消息管理器是从“message manager”类继承的。下面提供了一个示例头文件。
+```cpp
+/**
+ * @class NewVehicleMessageManager
+ *
+ * @brief implementation of MessageManager for the new vehicle
+ */
+class NewVehicleMessageManager : public MessageManager {
+ public:
+  /**
+   * @brief construct a lincoln message manager. protocol data for send and
+   * receive are added in the contruction.
+   */
+  NewVehicleMessageManager();
+  virtual ~NewVehicleMessageManager();
+
+  // define more functions here.
+  ...
+};
+```
+实现新的车辆工厂类。
+新的Vehicle Factory类继承自“AbstractVehicleFactory”类。下面提供了一个示例头文件。
+```cpp
+/**
+ * @class NewVehicleFactory
+ *
+ * @brief this class is inherited from AbstractVehicleFactory. It can be used to
+ * create controller and message manager for lincoln vehicle.
+ */
+class NewVehicleFactory : public AbstractVehicleFactory {
+ public:
+  /**
+  * @brief destructor
+  */
+  virtual ~NewVehicleFactory() = default;
+
+  /**
+   * @brief create lincoln vehicle controller
+   * @returns a unique_ptr that points to the created controller
+   */
+  std::unique_ptr<VehicleController> CreateVehicleController() override;
+
+  /**
+   * @brief create lincoln message manager
+   * @returns a unique_ptr that points to the created message manager
+   */
+  std::unique_ptr<MessageManager> CreateMessageManager() override;
+};
+```
+下面提供一个.cc文件
+```cpp
+std::unique_ptr<VehicleController>
+NewVehicleFactory::CreateVehicleController() {
+  return std::unique_ptr<VehicleController>(new lincoln::LincolnController());
+}
+
+std::unique_ptr<MessageManager> NewVehicleFactory::CreateMessageManager() {
+  return std::unique_ptr<MessageManager>(new lincoln::LincolnMessageManager());
+}
+```
+Apollo提供了基本类“ProtocolData”，可用于实现新车辆的协议。
+注册新车
+在“modules/canbus/vehicle/vehicle\u factory.cc”中注册新车辆。下面提供了一个示例头文件。
+```cpp
+void VehicleFactory::RegisterVehicleFactory() {
+  Register(VehicleParameter::LINCOLN_MKZ, []() -> AbstractVehicleFactory* {
+    return new LincolnVehicleFactory();
+  });
+
+  // register the new vehicle here.
+  Register(VehicleParameter::NEW_VEHICLE_BRAND, []() -> AbstractVehicleFactory* {
+    return new NewVehicleFactory();
+  });
+}
+```
+更新配置文件
+更新配置文件“modules/canbus/conf/canbus_conf.pb.txt”以激活阿波罗系统中的新车辆。
+```config
+vehicle_parameter {
+  brand: NEW_VEHICLE_BRAND
+  // put other parameters below
+  ...
+}
+```

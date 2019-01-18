@@ -1,0 +1,12 @@
+如何保存和加载Docker映像
+考虑到docker镜像大于1GB，最好在wifi环境下生成或下载docker镜像，然后将镜像复制到汽车上。
+保存Docker图像
+生成或下载docker映像后，可以将docker映像保存到本地tar文件中。
+例如
+docker save-o<save image to path><image name>
+docker save-o apollo_img.tar apolloauto/apollo：最新发布
+加载Docker图像
+将tar文件复制到汽车后，需要从tar文件加载docker映像。
+例如
+Docker Load-i<path to image tar file>
+docker load -i apollo_img.tar

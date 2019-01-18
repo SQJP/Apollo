@@ -1,0 +1,145 @@
+如何添加新的GPS接收器
+介绍
+GPS接收机是从GPS卫星接收信息，然后计算设备的地理位置、速度和精确时间的设备。该设备通常包括一个接收器、一个IMU、一个与车轮编码器的接口以及一个融合引擎，该引擎结合了来自这些传感器的信息。阿波罗使用的默认GPS接收器是Novatel卡。购买说明书是为了演示如何使用新的GPS接收器。
+添加新GPS接收器的步骤
+请按照以下步骤添加新的GPS接收器。
+*通过继承类解析器，为新的GPS接收机实现新的数据解析器。
+*为新的GPS接收器在Parser类中添加新接口
+*在config.proto中，为新的GPS接收器添加新的数据格式。
+*在函数create_parser from file data_parser.cpp中，为新的GPS接收器添加新的Parser实例。
+假设我们要添加一个新的GPS接收器：U-Blox。
+步骤1：通过继承类分析器，为新的GPS接收机实现新的数据分析器
+```cpp
+class UbloxParser : public Parser {
+public:
+    UbloxParser();
+
+    virtual MessageType get_message(MessagePtr& message_ptr);
+
+private:
+    bool verify_checksum();
+
+    Parser::MessageType prepare_message(MessagePtr& message_ptr);
+
+    // The handle_xxx functions return whether a message is ready.
+    bool handle_esf_raw(const ublox::EsfRaw* raw, size_t data_size);
+    bool handle_esf_ins(const ublox::EsfIns* ins);
+    bool handle_hnr_pvt(const ublox::HnrPvt* pvt);
+    bool handle_nav_att(const ublox::NavAtt *att);
+    bool handle_nav_pvt(const ublox::NavPvt* pvt);
+    bool handle_nav_cov(const ublox::NavCov *cov);
+    bool handle_rxm_rawx(const ublox::RxmRawx *raw);
+
+    double _gps_seconds_base = -1.0;
+
+    double _gyro_scale = 0.0;
+
+    double _accel_scale = 0.0;
+
+    float _imu_measurement_span = 0.0;
+
+    int _imu_frame_mapping = 5;
+
+    double _imu_measurement_time_previous = -1.0;
+
+    std::vector<uint8_t> _buffer;
+
+    size_t _total_length = 0;
+
+    ::apollo::drivers::gnss::Gnss _gnss;
+    ::apollo::drivers::gnss::Imu _imu;
+    ::apollo::drivers::gnss::Ins _ins;
+};
+
+```
+步骤2：在解析器类中为新的GPS接收器添加新接口
+在Parser类中添加函数create_blox:
+```cpp
+class Parser {
+public:
+    // Return a pointer to a NovAtel parser. The caller should take ownership.
+    static Parser* create_novatel();
+
+    // Return a pointer to a u-blox parser. The caller should take ownership.
+    static Parser* create_ublox();
+
+    virtual ~Parser() {}
+
+    // Updates the parser with new data. The caller must keep the data valid until get_message()
+    // returns NONE.
+    void update(const uint8_t* data, size_t length) {
+        _data = data;
+        _data_end = data + length;
+    }
+
+    void update(const std::string& data) {
+        update(reinterpret_cast<const uint8_t*>(data.data()), data.size());
+    }
+
+    enum class MessageType {
+        NONE,
+        GNSS,
+        GNSS_RANGE,
+        IMU,
+        INS,
+        WHEEL,
+        EPHEMERIDES,
+        OBSERVATION,
+        GPGGA,
+    };
+
+    // Gets a parsed protobuf message. The caller must consume the message before calling another
+    // get_message() or update();
+    virtual MessageType get_message(MessagePtr& message_ptr) = 0;
+
+protected:
+    Parser() {}
+
+    // Point to the beginning and end of data. Do not take ownership.
+    const uint8_t* _data = nullptr;
+    const uint8_t* _data_end = nullptr;
+
+private:
+    DISABLE_COPY_AND_ASSIGN(Parser);
+};
+
+Parser* Parser::create_ublox() {
+    return new UbloxParser();
+}
+```
+步骤3：在config.proto中，为新的GPS接收器添加新的数据格式定义
+在配置文件中添加UBLOX_TEXT和UBLOX_BINARY：modules/drivers/gnss/proto/config.proto
+```txt
+message Stream {
+    enum Format {
+        UNKNOWN = 0;
+        NMEA = 1;
+        RTCM_V2 = 2;
+        RTCM_V3 = 3;
+
+        NOVATEL_TEXT = 10;
+        NOVATEL_BINARY = 11;
+
+        UBLOX_TEXT = 20;
+        UBLOX_BINARY = 21;
+    }
+... ...
+```
+步骤4：在函数create_parser from file data_parser.cpp中，为新的GPS接收器添加新的Parser实例
+将代码添加到进程config:：stream:：ublox_binary，如下所示：
+
+``` cpp
+Parser* create_parser(config::Stream::Format format, bool is_base_station = false) {
+    switch (format) {
+    case config::Stream::NOVATEL_BINARY:
+        return Parser::create_novatel();
+
+    case config::Stream::UBLOX_BINARY:
+        return Parser::create_ubloxl();
+
+    default:
+        return nullptr;
+    }
+}
+
+```

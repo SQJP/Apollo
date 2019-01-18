@@ -1,0 +1,69 @@
+如何添加新的控制算法
+阿波罗的控制算法由一个或多个控制器组成，这些控制器很容易被不同的算法改变或替换。每个控制器向“canbus”输出一个或多个控制命令。阿波罗的默认控制算法包括横向控制器（latcontroller）和纵向控制器（loncontroller）。它们分别负责横向和纵向的车辆控制。
+新的控制算法不必遵循默认模式，例如，一个横向控制器+一个纵向控制器。它可以是单个控制器，也可以是任意数量控制器的组合。
+完成以下任务序列以添加新的控制算法：
+*创建控制器。
+*在'control_fig'文件中添加新的控制器配置。
+*注册新的控制器。
+创建控制器
+所有控制器都必须继承基类“controller”，它定义了一组接口。以下是控制器实现的示例：
+```c++
+namespace apollo {
+namespace control {
+
+class NewController : public Controller {
+ public:
+  NewController();
+  virtual ~NewController();
+  Status Init(const ControlConf* control_conf) override;
+  Status ComputeControlCommand(
+      const localization::LocalizationEstimate* localization,
+      const canbus::Chassis* chassis, const planning::ADCTrajectory* trajectory,
+      ControlCommand* cmd) override;
+  Status Reset() override;
+  void Stop() override;
+  std::string Name() const override;
+};
+}  // namespace control
+}  // namespace apollo
+```
+将新的控制器配置添加到控制配置文件
+要添加新的控制器配置，请完成以下步骤：
+1。根据算法要求为新控制器配置和参数定义一个“proto”。“lat controller”的“proto”定义示例见：`modules/control/proto/lat_controller_conf.proto`
+2。在定义新控制器“proto”后，例如“new_controller_conf.proto”，键入以下内容：
+```protobuf
+    syntax = "proto2";
+
+    package apollo.control;
+
+    message NewControllerConf {
+        double parameter1 = 1;
+        int32 parameter2 = 2;
+    }
+    ```
+3。用以下代码行更新'modules/control/proto/control-conf.proto'at'modules/control/proto/control-conf.proto'：
+```protobuf
+    optional apollo.control.NewControllerConf new_controller_conf = 15;
+    ```
+4。更新此文件中的“controllerType”：
+ ```protobuf
+    enum ControllerType {
+        LAT_CONTROLLER = 0;
+        LON_CONTROLLER = 1;
+        NEW_CONTROLLER = 2;
+      };
+    ```
+5。完成“protobuf”定义后，相应地更新“modules/control/conf/lincoln.pb.txt”中的控制配置文件。
+*注意：*上面的“control/conf”文件是Apollo的默认文件。您的项目可能使用不同的控制配置文件。
+注册新控制器
+要激活阿波罗系统中的新控制器，请在“controlleragent”中注册新控制器。去：
+> modules/control/controller/controller_agent.cc
+在shell中键入注册信息。例如：
+```c++
+void ControllerAgent::RegisterControllers() {
+  controller_factory_.Register(
+      ControlConf::NEW_CONTROLLER,
+      []() -> Controller * { return new NewController(); });
+}
+```
+完成此代码更新序列后，新的控制器将在Apollo系统中生效。
