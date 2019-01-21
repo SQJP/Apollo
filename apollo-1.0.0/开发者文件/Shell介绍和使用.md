@@ -51,5 +51,21 @@ Shell 脚本也是一种解释执行的程序，可以在终端直接调用（�
 #### 2.作为解释器参数  
 这种运行方式是，直接运行解释器，其参数就是shell脚本的文件名，见图7：  
 ![shell_p7](pic/shell_p7.png)  
+### 六.Shell常用命令
+#### 1.Shell echo命令
+Shell的echo命令与PHP的echo命令类似，都是用于字符串的输出。命令格式如下:  
+echo string  
+你可以使用echo实现更为复杂的输出格式控制。  
+##### (1)显示普通字符串
+echo "It is a test",这里的双引号完全可以省略。  
+##### (2)显示转义字符
+echo "\"It is a test"\"，结果是"It is a test"  
+##### (3)显示变量
+将以下代码保存在t.sh中：  
+#！/bin/bash  
+read name  
+echo "$name It is a test"  
+按照执行程序的方式执行该文件，其结果是：  
+![shell_p8](pic/shell_p8.png)
 
 
