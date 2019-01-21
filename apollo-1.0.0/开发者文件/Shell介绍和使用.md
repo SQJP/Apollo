@@ -39,5 +39,9 @@ Shell 通过PS1和PS2两个环境变量来控制提示符格式：
 1. 作为可执行程序  
 首先在文本编辑器中新建一个名为test.sh（扩展名sh代表shell）的文件，第1行内容为：#!/bin/bash（第1行的#!是一个约定的标记，它告诉系统这个脚本需要什么解释器来执行，即使用哪一种Shell；后面的/bin/bash就是指明了解释器的具体位置。且该行可以省略）；第1行内容为echo "Hello World!";  
 然后在test.sh所在目录下，打开LInux系统的shell，并在其中输入命令： ./test.sh，即可输出结果（见图5）。注意："./"不能省略。  
-![shell_p5](pic/shell_p5.png)
+![shell_p5](pic/shell_p5.png)  
+2. 作为解释器参数
+这种运行方式是，直接运行解释器，其参数就是shell脚本的文件名，见图6：
+![shell_p6](pic/shell_p6.png)  
+
 
