@@ -21,7 +21,8 @@ bash / sh / ksh / csh（Unix/linux 系统）
 （MS-DOS系统）  
 cmd.exe/ 命令提示字符（Windows NT 系统）  
 Windows PowerShell（支持 .NET Framework 技术的 Windows NT 系统）  
-传统意义上的shell指的是命令行式的shell，以后如果不特别注明，shell是指命令行式的shell。其中bash shell 是 Linux 的默认 shell，可通过命令查看LInux系统可用的shell（见图2）和Linux系统默认的shell（见图3）
+传统意义上的shell指的是命令行式的shell，以后如果不特别注明，shell是指命令行式的shell,如Linux系统的shell（见图2），进入方式有：通过Teminal终端图标进入或者通过快捷键“Ctrl+Alt+T”进入。  
 ![shell_p2](pic/shell_p2.png)
+其中bash shell 是 Linux 的默认 shell，可通过命令查看LInux系统可用的shell（见图3）和Linux系统默认的shell（见图3）  
 ![shell_p3](pic/shell_p3.png)
-
+![shell_p4](pic/shell_p4.png)
