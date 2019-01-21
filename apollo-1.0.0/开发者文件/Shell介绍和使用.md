@@ -12,7 +12,7 @@ Shell 除了能解释用户输入的命令，将它传递给内核，还可以�
 3. Shell 本身也可以被其他程序调用。  
 Shell 本身支持的命令并不多，但是它可以调用其他的程序，每个程序就是一个命令，这使得 Shell 命令的数量可以无限扩展，其结果就是 Shell 的功能非常强大，完全能够胜任 Linux 的日常管理工作，如文本或字符串检索、文件的查找或创建、大规模软件的自动部署、更改系统设置、监控服务器性能、发送报警邮件、抓取网页内容、压缩文件等。
 ### 三.Shell的分类
-shell基本上分两大类：  
+#### shell基本上分两大类：  
 一：图形界面shell（Graphical User Interface shell 即 GUI shell）  
 例如：应用最为广泛的 Windows Explorer （微软的windows系列操作系统），还有也包括广为人知的 Linux shell，其中linux shell 包括 X window manager (BlackBox和FluxBox），以及功能更强大的CDE、GNOME、KDE、 XFCE。  
 二：命令行式shell（Command Line Interface shell ，即CLI shell）  
@@ -23,9 +23,13 @@ cmd.exe/ 命令提示字符（Windows NT 系统）
 Windows PowerShell（支持 .NET Framework 技术的 Windows NT 系统）  
 传统意义上的shell指的是命令行式的shell，以后如果不特别注明，shell是指命令行式的shell,如Linux系统的shell（见图2），进入方式有：通过Teminal终端图标进入或者通过快捷键“Ctrl+Alt+T”进入。  
 ![shell_p2](pic/shell_p2.png)  
-
-以Linux系统为例，其中bash shell是Linux的默认shell。另外，可通过命令查看Linux系统可用的shell（见图3）和Linux系统默认的shell（见图4）  
-![shell_p3](pic/shell_p3.png)
+#### bash和sh的区别
+以Linux系统为例，其中bash shell是Linux的默认shell。在现代的Linux上，sh已经被bash代替，/bin/sh往往是指向/bin/bash的符号链接。bash兼容sh意味着，针对sh编写的 Shell代码可以不加修改地在bash中运行。  
+尽管如此，bash 和 sh 还是有一些不同之处：  
+●一方面，bash 扩展了一些命令和参数；  
+●另一方面，bash 并不完全和 sh 兼容，它们有些行为并不一致，但在大多数企业运维的情况下区别不大，特殊场景可以使用 bash 代替 sh。  
+另外，可通过命令查看Linux系统可用的shell（见图3）和Linux系统默认的shell（见图4）  
+![shell_p3](pic/shell_p3.png)  
 ![shell_p4](pic/shell_p4.png)  
 ### 四.Shell提示符
 提示符是通往 Shell 的大门，是输入 Shell 命令的地方。  
@@ -36,15 +40,15 @@ Shell 通过PS1和PS2两个环境变量来控制提示符格式：
 ● PS2 控制第二层命令行的提示符格式。  
 在 Shell 中初次输入命令，使用的是 PS1 指定的提示符格式；如果输入一个命令后还需要输入附加信息，Shell 就使用 PS2 指定的提示符格式。  
 ### 五.运行Shell脚本的两种方式
-####1.作为可执行程序  
+#### 1.作为可执行程序  
 Shell 脚本也是一种解释执行的程序，可以在终端直接调用（需要使用 chmod 命令给 Shell 脚本加上执行权限），如图5所示：
 ![shell_p5](pic/shell_p5.png)  
 第2行中，chmod +x表示给 test.sh 增加执行权限；  
-第3行中，./表示当前目录，整条命令的意思是执行当前目录下的 test.sh 脚本。如果不写./，Linux 会到系统路径（由 PATH 环境变量指定）下查找 test.sh，而系统路径下显然不存在这个脚本，所以会执行失败。  
+第3行中，"./"表示当前目录，整条命令的意思是执行当前目录下的 test.sh 脚本。如果不写"./"，Linux 会到系统路径（由 PATH 环境变量指定）下查找 test.sh，而系统路径下显然不存在这个脚本，所以会执行失败。  
 通过这种方式运行脚本，第一行一定要写对，好让系统查找到正确的解释器。  
-举例如下，首先在文本编辑器中新建一个名为test.sh（扩展名sh代表shell）的文件，内容如图6左侧所示；然后按图5命令执行，结果如图6右侧。
+举例如下，首先在文本编辑器中新建一个名为test.sh（扩展名sh代表shell）的文件，内容如图6左侧所示；然后按图5命令执行，结果如图6右侧。  
 ![shell_p6](pic/shell_p6.png)  
-####2.作为解释器参数  
+#### 2.作为解释器参数  
 这种运行方式是，直接运行解释器，其参数就是shell脚本的文件名，见图7：  
 ![shell_p7](pic/shell_p7.png)  
 
