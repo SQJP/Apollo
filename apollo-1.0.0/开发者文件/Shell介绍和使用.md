@@ -66,6 +66,42 @@ echo "\"It is a test"\"，结果是"It is a test"
 read name  
 echo "$name It is a test"  
 按照执行程序的方式执行该文件，其结果是：  
-![shell_p8](pic/shell_p8.png)
+![shell_p8](pic/shell_p8.png)  
+##### (4)显示换行
+![shell_p9](pic/shell_p9.png)  
+##### (5)显示不换行
+![shell_p10](pic/shell_p10.png)  
+##### (6)显示结果至定向文件
+![shell_p11](pic/shell_p11.png)  
+##### (7)原样输出字符，不进行转义或取变量(用单引号)
+![shell_p12](pic/shell_p12.png)  
+##### (8)显示命令执行结果
+![shell_p13](pic/shell_p13.png)  
+#### 2.Shell printf命令
+printf 命令模仿 C 程序库（library）里的 printf() 程序。  
+printf 由 POSIX 标准所定义，因此使用 printf 的脚本比使用 echo 移植性好。  
+printf 使用引用文本或空格分隔的参数，外面可以在 printf 中使用格式化字符串，还可以制定字符串的宽度、左右对齐方式等。默认 printf 不会像 echo 自动添加换行符，我们可以手动添加 \n。  
+printf 命令的语法：  
+printf  format-string  [arguments...]  
+参数说明：  
+format-string: 为格式控制字符串  
+arguments: 为参数列表。  
+#### 3.Shell test命令
+Shell中的 test 命令用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试。（具体见官网）  
+#### 4.Shell函数
+linux shell 可以用户定义函数，然后在shell脚本中可以随便调用。  
+shell中函数的定义格式如下：  
+[ function ] funname [()]  
 
+{  
 
+    action;  
+
+    [return int;]  
+
+}  
+说明：  
+1、可以带function fun() 定义，也可以直接fun() 定义,不带任何参数。  
+2、参数返回，可以显示加：return 返回，如果不加，将以最后一条命令运行结果，作为返回值。 return后跟数值n(0-255)  
+
+### Shell的其它用法和相关命令详情见网站http://c.biancheng.net/shell/和http://www.runoob.com/linux/linux-shell.html
