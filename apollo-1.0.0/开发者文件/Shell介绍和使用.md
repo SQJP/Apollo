@@ -17,9 +17,11 @@ shell基本上分两大类：
 例如：应用最为广泛的 Windows Explorer （微软的windows系列操作系统），还有也包括广为人知的 Linux shell，其中linux shell 包括 X window manager (BlackBox和FluxBox），以及功能更强大的CDE、GNOME、KDE、 XFCE。  
 二：命令行式shell（Command Line Interface shell ，即CLI shell）  
 例如：  
-× bash / sh / ksh / csh（Unix/linux 系统）  
-×（MS-DOS系统）  
-× cmd.exe/ 命令提示字符（Windows NT 系统）  
-× Windows PowerShell（支持 .NET Framework 技术的 Windows NT 系统）  
-传统意义上的shell指的是命令行式的shell，以后如果不特别注明，shell是指命令行式的shell。  
+bash / sh / ksh / csh（Unix/linux 系统）  
+（MS-DOS系统）  
+cmd.exe/ 命令提示字符（Windows NT 系统）  
+Windows PowerShell（支持 .NET Framework 技术的 Windows NT 系统）  
+传统意义上的shell指的是命令行式的shell，以后如果不特别注明，shell是指命令行式的shell。其中bash shell 是 Linux 的默认 shell，可通过命令查看LInux系统可用的shell（见图2）和Linux系统默认的shell（见图3）
+![shell_p2](pic/shell_p2.png)
+![shell_p3](pic/shell_p3.png)
 
