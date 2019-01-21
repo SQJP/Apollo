@@ -22,7 +22,20 @@ bash / sh / ksh / csh（Unix/linux 系统）
 cmd.exe/ 命令提示字符（Windows NT 系统）  
 Windows PowerShell（支持 .NET Framework 技术的 Windows NT 系统）  
 传统意义上的shell指的是命令行式的shell，以后如果不特别注明，shell是指命令行式的shell,如Linux系统的shell（见图2），进入方式有：通过Teminal终端图标进入或者通过快捷键“Ctrl+Alt+T”进入。  
-![shell_p2](pic/shell_p2.png)
-其中bash shell 是 Linux 的默认 shell，可通过命令查看LInux系统可用的shell（见图3）和Linux系统默认的shell（见图3）  
+![shell_p2](pic/shell_p2.png)  
+其中bash shell 是 Linux 的默认 shell，可通过命令查看LInux系统可用的shell（见图3）和Linux系统默认的shell（见图4）  
 ![shell_p3](pic/shell_p3.png)
-![shell_p4](pic/shell_p4.png)
+![shell_p4](pic/shell_p4.png)  
+### 四.Shell提示符
+提示符是通往 Shell 的大门，是输入 Shell 命令的地方。  
+对于普通用户，Base shell 默认的提示符是美元符号$；对于超级用户（root 用户），Bash Shell 默认的提示符是井号#。该符号表示 Shell 等待输入命令。  
+不同的 Linux 发行版使用的提示符格式不同。例如在 CentOS 中，默认的提示符格式为：[mozhiyan@localhost ~]$  
+Shell 通过PS1和PS2两个环境变量来控制提示符格式：  
+• PS1 控制最外层命令行的提示符格式。  
+• PS2 控制第二层命令行的提示符格式。  
+在 Shell 中初次输入命令，使用的是 PS1 指定的提示符格式；如果输入一个命令后还需要输入附加信息，Shell 就使用 PS2 指定的提示符格式。  
+### 五.运行Shell脚本的两种方式
+1. 作为可执行程序
+首先在文本编辑器中新建一个名为test.sh（扩展名sh代表shell）的文件，内容为echo "Hello World!";然后在test.sh所在目录下，打开LInux系统的shell，并在其中输入命令： ./test.sh，即可输出结果（见图5）  
+![shell_p5](pic/shell_p5.png)
+
