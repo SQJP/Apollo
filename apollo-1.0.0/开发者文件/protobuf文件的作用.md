@@ -29,7 +29,7 @@ message helloworld
 ```
 protoc -I=./ --cpp_out=./ test.proto  
 ```
-![tupian](/开发者文件/pic/protocol.png)
+![tupian](pic/protocol.png)
 将会生成两个文件, test.pb.h 和test.pb.cpp。test.pb.h文件中定义了 C++ 类的头文件，test.pb.cpp为C++ 类的实现文件。
 在生成的头文件中，定义了一个 C++ 类 helloworld，后面的 Writer 和 Reader 将使用这个类来对消息进行操作。诸如对消息的成员进行赋值，将消息序列化等等都有相应的方法。  
 3.把第二步生成的类包含到你写的程序中, 就可以使用它了.这一步主要是实例化类的对象，然后调用类中的函数给.proto中数据结构赋值。  
