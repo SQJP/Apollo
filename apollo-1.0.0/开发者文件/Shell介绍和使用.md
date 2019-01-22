@@ -48,6 +48,13 @@ Shell 脚本也是一种解释执行的程序，可以在终端直接调用（�
 通过这种方式运行脚本，第一行一定要写对，好让系统查找到正确的解释器。  
 举例如下，首先在文本编辑器中新建一个名为test.sh（扩展名sh代表shell）的文件，内容如图6左侧所示；然后按图5命令执行，结果如图6右侧。  
 ![shell_p6](pic/shell_p6.png)  
+##### 在这里，提一下source 命令:
+source FileName： 在当前bash环境下读取并执行FileName中的命令； 该命令通常用命令“.”来替代。  
+这两个命令都以一个脚本为参数，该脚本将作为当前shell的环境执行，即不会启动一个新的子进程。所有在脚本中设置的变量将成为当前Shell的一部分。  
+source filename 与 sh filename 及./filename执行脚本的区别:  
+●当shell脚本具有可执行权限时，用sh filename与./filename执行脚本是没有区别的。./filename是因为当前目录没有在PATH中，所有”.”是用来表示当前目录的。  
+●sh filename 重新建立一个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell。  
+●source filename：这个命令其实只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。  
 #### 2.作为解释器参数  
 这种运行方式是，直接运行解释器，其参数就是shell脚本的文件名，见图7：  
 ![shell_p7](pic/shell_p7.png)  
