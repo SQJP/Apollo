@@ -29,7 +29,7 @@ message helloworld
 ```
 protoc -I=./ --cpp_out=./ test.proto  
 ```
-![tupian](pic/protocol.png)
+![tupian](pic/protocol.png)  
 将会生成两个文件, test.pb.h 和test.pb.cpp。test.pb.h文件中定义了 C++ 类的头文件，test.pb.cpp为C++ 类的实现文件。
 在生成的头文件中，定义了一个 C++ 类 helloworld，后面的 Writer 和 Reader 将使用这个类来对消息进行操作。诸如对消息的成员进行赋值，将消息序列化等等都有相应的方法。  
 3.把第二步生成的类包含到你写的程序中, 就可以使用它了.这一步主要是实例化类的对象，然后调用类中的函数给.proto中数据结构赋值。  
@@ -103,7 +103,6 @@ Msg1 是一个 helloworld 类的对象，set_id() 用来设置 id 的值。Seria
 protocol 解决了读写磁盘数据时需要的字符串转化问题，只需按照protocol书写规则存放数据结构，用protoc进行编译，生成数据处理类，其他的就是在自己的代码中调用类中的方法，实现自己的功能。由于是二进制存储，所以protocol具有占用空间小，传送速度快等优点。在js中json文件和protocol类似。
 ## 参考
 Google Protocol Buffer 的使用和原理:[https://www.ibm.com/developerworks/cn/linux/l-cn-gpb/index.html](https://www.ibm.com/developerworks/cn/linux/l-cn-gpb/index.html)  
-
 protobuf 归纳:[https://blog.csdn.net/mynameislu/article/details/78645880](https://blog.csdn.net/mynameislu/article/details/78645880)  
 google protobuf学习笔记二：使用和原理:[https://blog.csdn.net/majianfei1023/article/details/45112415/](https://blog.csdn.net/majianfei1023/article/details/45112415/)  
 
