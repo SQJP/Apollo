@@ -125,7 +125,8 @@ bazel query --nohost_deps --noimplicit_deps 'deps(//main:hello-world)' \
 这个指令告诉Bazel查找target //main:hello-world的所有依赖项（不包括host和隐式依赖），然后输出图的文字描述。再把文字描述贴到GraphViz里，你就可以看到如下的依赖图了。可以看出这个项目是用单个源文件编译出的单个target，并没有别的依赖。  
 好的，到目前为止，我们已经建立了工作区，编译了一个项目，并且查看了它的依赖。  
 
-
+Bazel超级详细讲解：http://www.cnblogs.com/Jack47/p/bazel-faq.html    
+       https://www.cnblogs.com/Jack47/p/build-in-the-cloud.html    
 
 
 
