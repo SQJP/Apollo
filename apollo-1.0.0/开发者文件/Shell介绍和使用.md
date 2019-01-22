@@ -111,4 +111,6 @@ shell中函数的定义格式如下：
 1、可以带function fun() 定义，也可以直接fun() 定义,不带任何参数。  
 2、参数返回，可以显示加：return 返回，如果不加，将以最后一条命令运行结果，作为返回值。 return后跟数值n(0-255)  
 
-### Shell的其它用法和相关命令详情见网站http://c.biancheng.net/shell/和http://www.runoob.com/linux/linux-shell.html
+### Shell参考
+Shell脚本_Linux Shell脚本学习指南（超详细）http://c.biancheng.net/shell/  
+Shell教程|菜鸟教程 http://www.runoob.com/linux/linux-shell.html
