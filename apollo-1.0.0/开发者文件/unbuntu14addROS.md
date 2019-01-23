@@ -12,7 +12,7 @@
 参考官网教程进行如下安装  
 * untu14.04配置Ubuntu仓库允许"restricted," "universe," and "multiverse  
 由于我们没有可视化界面所以只能用命令来进行编写，执行如下命令：  
-`vim cd etc/apt/sources.list'打开文件进行手动添加。如下图所示  
+`vim cd etc/apt/sources.list'打开文件进行手动添加。如下图所示如果没有vim的话可以使用`sudo apt-get install vim-gtk`进行安装  
 ![sources1](pic/sources1.png)  
 ![sources](pic/sources.png)  
 vim编译命令为输入`i`，退出命令可以选以下任意个：`ZZ`，`shift+zz`，`：x`，`：wq`  
