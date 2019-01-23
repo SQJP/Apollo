@@ -36,8 +36,7 @@
  （4）find命令，例如：  
  find . -mtime -1 -type f -print  
  用来查找过去24小时（-mtime –2则表示过去48小时）内修改过的文件。如果您想将所有查找到的文件打一个包，则可以使用以下linux 脚本：  
- #!/bin/sh  
- # The ticks are backticks (`) not normal quotes (‘):  
+ #!/bin/bash  
  tar -zcvf lastmod.tar.gz `find . -mtime -1 -type f -print`  
 #### 3) 流程控制
  1.if
