@@ -25,7 +25,8 @@ Docker 要求 Ubuntu 系统的内核版本高于 3.10 ，查看本页面的前�
 运行`sudo systemctl start docker` （发现sudo service docker start去启动docker服务，输入docker的指令后却没有反应，然后sudo service docker stop + sudo service docker start/sudo service docker restart重启docker 服务却没有反应，请ps -ef|grep docker察看所有docker进程，并且kill掉它们，再sudo service docker start就没有问题了）  
 ## 如果是非root用户可以执行  
 运行`sudo usermod -aG docker runoob`  
-用helloworld测试安装的docker  
+
+用helloworld测试安装的docker
 ===========
 # 测试hello-world
 运行`sudo docker run ubuntu:15.10 /bin/echo "Hello world"`  （如果本地库中没有系统会自动从dockerhub远程库中进行下载）  

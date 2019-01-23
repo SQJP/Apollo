@@ -69,6 +69,7 @@
 停止所有docker容器 `sudo docker kill $(sudo docker ps -q)`  
 删除所有docker容器 `sudo docker rm $(sudo docker ps -aq)`  
 贴标签`docker tag 860c279d2fec runoob/centos:dev`  
+
 基于已有的image，创建docker image
 ============
 # 第一个方法：在运行的container中安装service然后导出为image  
