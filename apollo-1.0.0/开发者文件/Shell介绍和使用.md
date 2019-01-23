@@ -10,8 +10,9 @@ Shell 除了能解释用户输入的命令，将它传递给内核，还可以�
 1. 调用其他程序，给其他程序传递数据或参数，并获取程序的处理结果；  
 2. 在多个程序之间传递数据，把一个程序的输出作为另一个程序的输入；  
 3. Shell 本身也可以被其他程序调用。  
+### 三.Shell的用途
 Shell 本身支持的命令并不多，但是它可以调用其他的程序，每个程序就是一个命令，这使得 Shell 命令的数量可以无限扩展，其结果就是 Shell 的功能非常强大，完全能够胜任 Linux 的日常管理工作，如文本或字符串检索、文件的查找或创建、大规模软件的自动部署、更改系统设置、监控服务器性能、发送报警邮件、抓取网页内容、压缩文件等。
-### 三.Shell的分类
+### 四.Shell的分类
 #### shell基本上分两大类：  
 一：图形界面shell（Graphical User Interface shell 即 GUI shell）  
 例如：应用最为广泛的 Windows Explorer （微软的windows系列操作系统），还有也包括广为人知的 Linux shell，其中linux shell 包括 X window manager (BlackBox和FluxBox），以及功能更强大的CDE、GNOME、KDE、 XFCE。  
@@ -31,7 +32,7 @@ Windows PowerShell（支持 .NET Framework 技术的 Windows NT 系统）
 另外，可通过命令查看Linux系统可用的shell（见图3）和Linux系统默认的shell（见图4）  
 ![shell_p3](pic/shell_p3.png)  
 ![shell_p4](pic/shell_p4.png)  
-### 四.Shell提示符
+### 五.Shell提示符
 提示符是通往 Shell 的大门，是输入 Shell 命令的地方。  
 对于普通用户，Base shell 默认的提示符是美元符号$；对于超级用户（root 用户），Bash Shell 默认的提示符是井号#。该符号表示 Shell 等待输入命令。  
 不同的 Linux 发行版使用的提示符格式不同。例如在 CentOS 中，默认的提示符格式为：[mozhiyan@localhost ~]$  
@@ -39,7 +40,7 @@ Shell 通过PS1和PS2两个环境变量来控制提示符格式：
 ● PS1 控制最外层命令行的提示符格式。  
 ● PS2 控制第二层命令行的提示符格式。  
 在 Shell 中初次输入命令，使用的是 PS1 指定的提示符格式；如果输入一个命令后还需要输入附加信息，Shell 就使用 PS2 指定的提示符格式。  
-### 五.运行Shell脚本的两种方式
+### 六.运行Shell脚本的两种方式
 #### 1.作为可执行程序  
 Shell 脚本也是一种解释执行的程序，可以在终端直接调用（需要使用 chmod 命令给 Shell 脚本加上执行权限），如图5所示：
 ![shell_p5](pic/shell_p5.png)  
@@ -58,7 +59,7 @@ source filename 与 sh filename 及./filename执行脚本的区别:
 #### 2.作为解释器参数  
 这种运行方式是，直接运行解释器，其参数就是shell脚本的文件名，见图7：  
 ![shell_p7](pic/shell_p7.png)  
-### 六.Shell常用命令
+### 七.Shell常用命令
 #### 1.Shell echo命令
 Shell的echo命令与PHP的echo命令类似，都是用于字符串的输出。命令格式如下:  
 echo string  
