@@ -64,7 +64,7 @@ cc_binary(
 ## 语句解读 ##
 1，name这个target指被编译成静态库以后叫什么名字；  
 2，srcs这个target指哪些源文件需要被编译，我这里使用通配符.（点），即cc_binary文件夹下所有.h和.m都需要被编译；  
-3，hdrs这个target指哪些头文件是public。  
+3，hdrs这个target指哪些头文件是public,如example中stage1中无public文件，state2中的public文件为hello-greet.h；state3中的public文件为hello-greet.h   
 
 
 ##  使用Bazel编译项目 ##
