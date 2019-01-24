@@ -122,6 +122,7 @@ shell中函数的定义格式如下：
 #### 3.流程控制：
 ##### if  else
 (形式1)  
+
 if condition  
 then  
     command1   
@@ -129,6 +130,7 @@ then
     ...  
     commandN   
 fi  
+
 (形式2)  
 if condition  
 then  
@@ -139,6 +141,7 @@ then
 else  
     command  
 fi  
+
 (形式3)  
 if condition1  
 then  
@@ -162,11 +165,13 @@ while condition
 do  
     command  
 done  
+
 还有无限循环模式：  
 while :  
 do  
     command  
 done  
+
 或者  
 while true  
 do  
