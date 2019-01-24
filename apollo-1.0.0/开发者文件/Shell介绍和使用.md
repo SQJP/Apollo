@@ -61,49 +61,36 @@ source filename 与 sh filename 及./filename执行脚本的区别:
 ![shell_p7](pic/shell_p7.png)  
 ### 七.Shell命令
 #### 1.常用命令：
-echo :字符串输出命令。与PHP的echo命令类似，格式是echo string  
-print :格式化输出。格式是printf format-string [arguments...] 其中，format-string: 为格式控制字符串；arguments: 为参数列表。  
-rm :删除文件，格式是rm file  
-test :命令用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试，比如数值：test $[num1] -eq $[num2]，num1和num2是数值；字符：test $num1 = $num2，num1和num2是字符；文件：est -e ./bash，-e表示文件是否存在。  
-cp :文件拷贝，格式是cp sourcefile destfile  
-cd :目录切换，包括cd dir(切换到当前目录下的dir目录)；cd /(切换到根目录)；cd ..(切换到上一级目录)，等等。  
-mv :重命名文件或移动文件  
-ps :显示进程信息。ps ux 显示当前用户的进程；ps uxwww 显示当前用户的进程的详细信息；ps aux 显示所有用户的进程；ps ef 显示系统所有进程信息  
-grep :在文件内搜索字符串，例如搜索字符串"searchstring"，格式是grep 'searchstring' file.txt  
-tr :translate的简写，主要用于压缩重复字符，删除文件中的控制字符以及进行字符转换操作。  
-awk :就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。  
-local :一般用于shell内局部变量的定义，多使用在函数内部  
-mkdir :创建目录目录。格式是mkdir [OPTION]... DIRECTORY...，参数[OPTION]都是可选的
-find :搜索文件，格式是find . -name filename -print。例如find . -mtime -1 -type f -print，表示用来查找过去24小时（-mtime –2则表示过去48小时）内修改过的文件。  
-xargs :全称是transform arguments，意为转换参数，它将标准输入转换为命令行参数。因为linux命令行中经常要使用到管道符连接不同的命令，但是有些命令不支持标准输入，此时就需要使用xargs将标准输入转换为参数。xargs一般是通过管道符接受标准输入并将其转换为命令行参数传递给cmd。  
+(1)echo :字符串输出命令。与PHP的echo命令类似，格式是echo string  
+(2)print :格式化输出。格式是printf format-string [arguments...] 其中，format-string: 为格式控制字符串；arguments: 为参数列表。  
+(3)rm :删除文件，格式是rm file  
+(4)test :命令用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试，比如数值：test $[num1] -eq $[num2]，num1和num2是数值；字符：test $num1 = $num2，num1和num2是字符；文件：est -e ./bash，-e表示文件是否存在。  
+(5)cp :文件拷贝，格式是cp sourcefile destfile  
+(6)cd :目录切换，包括cd dir(切换到当前目录下的dir目录)；cd /(切换到根目录)；cd ..(切换到上一级目录)，等等。  
+(7)mv :重命名文件或移动文件  
+(8)ps :显示进程信息。ps ux 显示当前用户的进程；ps uxwww 显示当前用户的进程的详细信息；ps aux 显示所有用户的进程；ps ef 显示系统所有进程信息  
+(9)grep :在文件内搜索字符串，例如搜索字符串"searchstring"，格式是grep 'searchstring' file.txt  
+(10)tr :translate的简写，主要用于压缩重复字符，删除文件中的控制字符以及进行字符转换操作。  
+(11)awk :是一种处理文本文件的语言，是一个强大的文本分析工具。就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。  
+(12)local :一般用于shell内局部变量的定义，多使用在函数内部  
+(13)mkdir :创建目录目录。格式是mkdir [OPTION]... DIRECTORY...，参数[OPTION]都是可选的  
+(14)find :搜索文件，格式是find . -name filename -print。例如find . -mtime -1 -type f -print，表示用来查找过去24小时（-mtime –2则表示过去48小时）内修改过的文件。  
+(15)xargs :全称是transform arguments，意为转换参数，它将标准输入转换为命令行参数。因为linux命令行中经常要使用到管道符连接不同的命令，但是有些命令不支持标准输入，此时就需要使用xargs将标准输入转换为参数。xargs一般是通过管道符接受标准输入并将其转换为命令行参数传递给cmd。  
 
-date :系统时间设定或显示。date　显示当前日期时间；date -s 20:30:30　设置系统时间为20:30:30；date -s 2002-3-5　设置系统时期为2003-3-5；date -s "060520 06:00:00"　设置系统时期为2006年5月20日6点整。  
-wget :是一个用于文件下载的命令行工具，选项繁多且用法灵活。  
-source :用于shell脚本执行。只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。见上文shell分类中关于“source filepath或者. filepath，sh filepath或者./filepath区别”  
-pwd :该命令用来显示目前所在的工作目录。格式是pwd [OPTION]...  
-check :脚本检查目录  
-build :  
-buildify :  
-buildgnss :  
-doc :  
-lint :  
-release :  
-release_noproprietary :  
-coverage :  
-clean :  
-version :  
-gen :  
-push :  
-print_usage :  
-exec :shell内部命令。在shell脚本中使用exec命令，根据操作的对象不同会有不同的行为。如:操纵文件描述符和其他命令  
-read :提示用户输入，并将输入赋值给变量，格式是read var  
-cat :输出文件内容到标准输出设备（屏幕）上，格式是cat file.txt  
-file :得到文件类型，格式是file somefile  
-cut :指定欲显示的文件内容范围，并将它们输出到标准输出设备,格式是cut -b colnum file。比如：输出每行第5个到第9个字符cut -b5-9 file.txt千万不要和cat命令混淆，这是两个完全不同的命  
-expr :进行数学运算，格式是expr num1 "+" num2,例如：expr 2 "+" 3  
-tee :将数据输出到标准输出设备(屏幕) 和文件，格式是somecommand | tee outfile  
-wc :计算文件行数，计算文件中的单词数，计算文件中的字符数，格式是wc –l filewc -w filewc -c file  
-ls: 文件列表  
+(16)date :系统时间设定或显示。date　显示当前日期时间；date -s 20:30:30　设置系统时间为20:30:30；date -s 2002-3-5　设置系统时期为2003-3-5；date -s "060520 06:00:00"　设置系统时期为2006年5月20日6点整。  
+(17)wget :是一个用于文件下载的命令行工具，选项繁多且用法灵活。  
+(18)source :用于shell脚本执行。只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。见上文shell分类中关于“source filepath或者. filepath，sh filepath或者./filepath区别”  
+(19)pwd :该命令用来显示目前所在的工作目录。格式是pwd [OPTION]...  
+(20)exec :shell内部命令。在shell脚本中使用exec命令，根据操作的对象不同会有不同的行为。如:操纵文件描述符和其他命令  
+(21)read :提示用户输入，并将输入赋值给变量，格式是read var  
+(22)cat :输出文件内容到标准输出设备（屏幕）上，格式是cat file.txt  
+(23)file :得到文件类型，格式是file somefile  
+(24)cut :指定欲显示的文件内容范围，并将它们输出到标准输出设备,格式是cut -b colnum file。比如：输出每行第5个到第9个字符cut -b5-9 file.txt千万不要和cat命令混淆，这是两个完全不同的命  
+(25)expr :进行数学运算，格式是expr num1 "+" num2,例如：expr 2 "+" 3  
+(26)tee :将数据输出到标准输出设备(屏幕) 和文件，格式是somecommand | tee outfile  
+(27)wc :计算文件行数，计算文件中的单词数，计算文件中的字符数，格式是wc –l filewc -w filewc -c file  
+(28)ls: 文件列表  
+#### 提示：更加详细的shell命令请参见文章最后链接“Shell教程|菜鸟教程”中关于“Linux命令大全”的介绍。
 #### 2.函数
 linux shell 可以用户定义函数，然后在shell脚本中可以随便调用。  
 shell中函数的定义格式如下：  
