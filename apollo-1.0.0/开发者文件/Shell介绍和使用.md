@@ -59,44 +59,52 @@ source filename 与 sh filename 及./filename执行脚本的区别:
 #### 2.作为解释器参数  
 这种运行方式是，直接运行解释器，其参数就是shell脚本的文件名，见图7：  
 ![shell_p7](pic/shell_p7.png)  
-### 七.Shell常用命令
-#### 1.Shell echo命令
-Shell的echo命令与PHP的echo命令类似，都是用于字符串的输出。命令格式如下:  
-echo string  
-你可以使用echo实现更为复杂的输出格式控制。  
-##### (1)显示普通字符串
-echo "It is a test",这里的双引号完全可以省略。  
-##### (2)显示转义字符
-echo "\"It is a test"\"，结果是"It is a test"  
-##### (3)显示变量
-将以下代码保存在t.sh中：  
-#！/bin/bash  
-read name  
-echo "$name It is a test"  
-按照执行程序的方式执行该文件，其结果是：  
-![shell_p8](pic/shell_p8.png)  
-##### (4)显示换行
-![shell_p9](pic/shell_p9.png)  
-##### (5)显示不换行
-![shell_p10](pic/shell_p10.png)  
-##### (6)显示结果至定向文件
-![shell_p11](pic/shell_p11.png)  
-##### (7)原样输出字符，不进行转义或取变量(用单引号)
-![shell_p12](pic/shell_p12.png)  
-##### (8)显示命令执行结果
-![shell_p13](pic/shell_p13.png)  
-#### 2.Shell printf命令
-printf 命令模仿 C 程序库（library）里的 printf() 程序。  
-printf 由 POSIX 标准所定义，因此使用 printf 的脚本比使用 echo 移植性好。  
-printf 使用引用文本或空格分隔的参数，外面可以在 printf 中使用格式化字符串，还可以制定字符串的宽度、左右对齐方式等。默认 printf 不会像 echo 自动添加换行符，我们可以手动添加 \n。  
-printf 命令的语法：  
-printf  format-string  [arguments...]  
-参数说明：  
-format-string: 为格式控制字符串  
-arguments: 为参数列表。  
-#### 3.Shell test命令
-Shell中的 test 命令用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试。（具体见官网）  
-#### 4.Shell函数
+### 七.Shell命令
+#### 1.常用命令：
+echo :字符串输出命令。与PHP的echo命令类似，格式是echo string  
+print :格式化输出。格式是printf format-string [arguments...] 其中，format-string: 为格式控制字符串；arguments: 为参数列表。  
+rm :删除文件，格式是rm file  
+test :命令用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试，比如数值：test $[num1] -eq $[num2]，num1和num2是数值；字符：test $num1 = $num2，num1和num2是字符；文件：est -e ./bash，-e表示文件是否存在。  
+cp :文件拷贝，格式是cp sourcefile destfile  
+cd :目录切换，包括cd dir(切换到当前目录下的dir目录)；cd /(切换到根目录)；cd ..(切换到上一级目录)，等等。  
+mv :重命名文件或移动文件  
+ps :显示进程信息。ps ux 显示当前用户的进程；ps uxwww 显示当前用户的进程的详细信息；ps aux 显示所有用户的进程；ps ef 显示系统所有进程信息  
+grep :在文件内搜索字符串，例如搜索字符串"searchstring"，格式是grep 'searchstring' file.txt  
+tr :translate的简写，主要用于压缩重复字符，删除文件中的控制字符以及进行字符转换操作。  
+awk :就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。  
+local :一般用于shell内局部变量的定义，多使用在函数内部  
+mkdir :创建目录目录。格式是mkdir [OPTION]... DIRECTORY...，参数[OPTION]都是可选的
+find :搜索文件，格式是find . -name filename -print。例如find . -mtime -1 -type f -print，表示用来查找过去24小时（-mtime –2则表示过去48小时）内修改过的文件。  
+xargs :全称是transform arguments，意为转换参数，它将标准输入转换为命令行参数。因为linux命令行中经常要使用到管道符连接不同的命令，但是有些命令不支持标准输入，此时就需要使用xargs将标准输入转换为参数。xargs一般是通过管道符接受标准输入并将其转换为命令行参数传递给cmd。  
+
+date :系统时间设定或显示。date　显示当前日期时间；date -s 20:30:30　设置系统时间为20:30:30；date -s 2002-3-5　设置系统时期为2003-3-5；date -s "060520 06:00:00"　设置系统时期为2006年5月20日6点整。  
+wget :是一个用于文件下载的命令行工具，选项繁多且用法灵活。  
+source :用于shell脚本执行。只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。见上文shell分类中关于“source filepath或者. filepath，sh filepath或者./filepath区别”  
+pwd :该命令用来显示目前所在的工作目录。格式是pwd [OPTION]...  
+check :脚本检查目录  
+build :  
+buildify :  
+buildgnss :  
+doc :  
+lint :  
+release :  
+release_noproprietary :  
+coverage :  
+clean :  
+version :  
+gen :  
+push :  
+print_usage :  
+exec :shell内部命令。在shell脚本中使用exec命令，根据操作的对象不同会有不同的行为。如:操纵文件描述符和其他命令  
+read :提示用户输入，并将输入赋值给变量，格式是read var  
+cat :输出文件内容到标准输出设备（屏幕）上，格式是cat file.txt  
+file :得到文件类型，格式是file somefile  
+cut :指定欲显示的文件内容范围，并将它们输出到标准输出设备,格式是cut -b colnum file。比如：输出每行第5个到第9个字符cut -b5-9 file.txt千万不要和cat命令混淆，这是两个完全不同的命  
+expr :进行数学运算，格式是expr num1 "+" num2,例如：expr 2 "+" 3  
+tee :将数据输出到标准输出设备(屏幕) 和文件，格式是somecommand | tee outfile  
+wc :计算文件行数，计算文件中的单词数，计算文件中的字符数，格式是wc –l filewc -w filewc -c file  
+ls: 文件列表  
+#### 2.函数
 linux shell 可以用户定义函数，然后在shell脚本中可以随便调用。  
 shell中函数的定义格式如下：  
 [ function ] funname [()]  
@@ -111,6 +119,85 @@ shell中函数的定义格式如下：
 说明：  
 1、可以带function fun() 定义，也可以直接fun() 定义,不带任何参数。  
 2、参数返回，可以显示加：return 返回，如果不加，将以最后一条命令运行结果，作为返回值。 return后跟数值n(0-255)  
+#### 3.流程控制：
+##### if  else
+(形式1)  
+if condition  
+then  
+    command1   
+    command2  
+    ...  
+    commandN   
+fi  
+(形式2)  
+if condition  
+then  
+    command1   
+    command2  
+    ...  
+    commandN  
+else  
+    command  
+fi  
+(形式3)  
+if condition1  
+then  
+    command1  
+elif condition2   
+then   
+    command2  
+else  
+    commandN  
+fi  
+##### for循环
+for var in item1 item2 ... itemN  
+do  
+    command1  
+    command2  
+    ...  
+    commandN  
+done  
+##### while语句
+while condition  
+do  
+    command  
+done  
+还有无限循环模式：  
+while :  
+do  
+    command  
+done  
+或者  
+while true  
+do  
+    command  
+done  
+##### until循环
+until 循环执行一系列命令直至条件为 true 时停止。until 循环与 while 循环在处理方式上刚好相反。一般 while 循环优于 until 循环，但在某些时候—也只是极少数情况下，until 循环更加有用。  
+until condition  
+do  
+    command  
+done  
+##### case语句
+Shell case语句为多选择语句。可以用case语句匹配一个值与一个模式，如果匹配成功，执行相匹配的命令。  
+case 值 in  
+模式1)  
+    command1  
+    command2  
+    ...  
+    commandN  
+    ;;  
+模式2）  
+    command1  
+    command2  
+    ...  
+    commandN  
+    ;;  
+esac  
+##### break语句
+break命令允许跳出所有循环（终止执行后面的所有循环）。  
+##### continue语句
+continue命令与break命令类似，只有一点差别，它不会跳出所有循环，仅仅跳出当前循环。  
 
 ### Shell参考
 Shell脚本_Linux Shell脚本学习指南（超详细）http://c.biancheng.net/shell/  
