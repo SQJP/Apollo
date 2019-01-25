@@ -21,7 +21,7 @@ apollo-1.0.0软件系统是安装在ubuntu14.04.3系统下，使用docker来部�
 （5）dreamview -可视化模块。查看规划的轨迹及实时的转向刹车油门信息  
 （6）drivers -驱动模块。各种传感器驱动。  
 （7）hmi-人机交互模块。  
-（8）localization-定位模块  
+（8）localization-+定位模块  
 （9）monitor -监控模块。监控硬件状态，同时把状态发给交互界面。  
 （10）perception -感知模块。包括视觉、毫米波、激光雷达。  
 （11）planning    -局部决策规划模块。  
