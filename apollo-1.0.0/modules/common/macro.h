@@ -20,17 +20,21 @@
 
 #ifndef MODULES_COMMON_MACRO_H_
 #define MODULES_COMMON_MACRO_H_
+//宏定义 DISALLOW_COPY_AND_ASSIGN
+//用于在C++中禁止class的拷贝构造函数和赋值构造函数，良好的c++代码应该主动管理这2个操作符。
+//在caffe和cartographer或者其他的著名库中均有类似的操作。
 
 #define DISALLOW_COPY_AND_ASSIGN(classname) \
  private:                                   \
   classname(const classname&);              \
   classname& operator=(const classname&);
-
+//宏定义 DISALLOW_IMPLICIT_CONSTRUCTORS 禁止class的无参构造函数
 #define DISALLOW_IMPLICIT_CONSTRUCTORS(classname) \
  private:                                         \
   classname();                                    \
   DISALLOW_COPY_AND_ASSIGN(classname);
-
+//宏定义 DECLARE_SINGLETON 
+//单例类定义，instance() 返回指向同一个class对象的指针。禁止拷贝/赋值运算符。
 #define DECLARE_SINGLETON(classname)        \
  public:                                    \
   static classname* instance() {            \
