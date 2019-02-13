@@ -17,6 +17,7 @@
 /**
  * @file
  * @brief Defines the Factory class.
+ * 创建对象的工厂模式。所有需要创建的对象使用ProductCreator函数指针创建。
  */
 
 #ifndef MODULES_COMMON_UTIL_FACTORY_H_
@@ -51,6 +52,10 @@ namespace util {
  * the registered class
  * @param MapContainer Internal implementation of the function mapping
  * IdentifierType to ProductCreator, by default std::unordered_map
+ * IdentifierType：唯一标识符，如string字符串。
+ * AbstractProduct： 如具有相同接口的纯虚基类class。
+ * ProductCreator= AbstractProduct *(*)()：函数指针。形参是空。返回值是指针，指向抽象class。
+ * 
  */
 template <typename IdentifierType, class AbstractProduct,
           class ProductCreator = AbstractProduct* (*)(),
@@ -64,6 +69,7 @@ class Factory {
    * @param creator Function returning a pointer to an instance of
    * the registered class
    * @return True iff the key id is still available
+   * 注册某class的信息到unordered_map中，但是没有创建该class的实例对象。
    */
   bool Register(const IdentifierType& id, ProductCreator creator) {
     return producers_.insert(std::make_pair(id, creator)).second;
@@ -72,6 +78,7 @@ class Factory {
   /**
    * @brief Unregisters the class with the given identifier
    * @param id The identifier of the class to be unregistered
+   * 删除已经注册的信息
    */
   bool Unregister(const IdentifierType& id) {
     return producers_.erase(id) == 1;
@@ -81,6 +88,7 @@ class Factory {
    * @brief Creates and transfers membership of an object of type matching id.
    * Need to register id before CreateObject is called.
    * @param id The identifier of the class we which to instantiate
+   * 创建某class的实例对象
    */
   std::unique_ptr<AbstractProduct> CreateObject(const IdentifierType& id) {
     auto id_iter = producers_.find(id);

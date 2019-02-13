@@ -16,6 +16,9 @@
 
 /**
  * @file
+ * AdapterManager 类用于管理多个适配器，单例模式。
+ * 所有的message/IO适配器均需要通过REGISTER_ADAPTER(name)在这里注册。
+ * 所有的数据交互也通过AdapterManager来进行统一的管理。
  */
 
 #ifndef MODULES_ADAPTERS_ADAPTER_MANAGER_H_
@@ -127,6 +130,7 @@ class AdapterManager {
  public:
   /**
    * @brief Initialize the /class AdapterManager singleton.
+   * 加载默认config
    */
   static void Init();
 
@@ -136,6 +140,7 @@ class AdapterManager {
    * file path.
    * @param adapter_config_filename the path to the proto file that
    * contains the adapter manager configuration.
+   * 加载给定filename的config
    */
   static void Init(const std::string &adapter_config_filename);
 
@@ -143,6 +148,7 @@ class AdapterManager {
    * @brief Initialize the /class AdapterManager singleton with the
    * provided configuration.
    * @param configs the adapter manager configuration proto.
+   * 加载proto格式的配置，创建 Adapter对象
    */
   static void Init(const AdapterManagerConfig &configs);
   static void Observe();
@@ -151,6 +157,7 @@ class AdapterManager {
    * @brief create a timer which will call a callback at the specified
    * rate. It takes a class member function, and a bare pointer to the
    * object to call the method on.
+   * ROS节点回调函数
    */
   template <class T>
   static ros::Timer CreateTimer(ros::Duration period,

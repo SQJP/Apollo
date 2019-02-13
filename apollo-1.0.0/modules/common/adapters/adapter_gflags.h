@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-
+//adapter_gflags.cc定义了在ROS环境下的多个topic的发布地址路径
+//几乎每个模块都有*_gflags.cc用于定义本模块用到的变量。
 #ifndef MODULES_COMMON_ADAPTERS_ADAPTER_GFLAGS_H_
 #define MODULES_COMMON_ADAPTERS_ADAPTER_GFLAGS_H_
 

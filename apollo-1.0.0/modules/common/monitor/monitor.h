@@ -17,6 +17,9 @@
 /**
  * @file monitor.h
  * @brief The class of Monitor
+ * Monitor类主要用于收集各个模块的message信息，并发布到相关的topic中
+ * 总的来说Monitor类就是收集各个模块的工作log日志并发布到相应的topic用于监控。
+ * 其中用到了MonitorBuffer，目的是合并相同level的log消息日志并一次性发布——减少冗余信息。
  */
 
 #ifndef MODULES_MONITOR_MONITOR_H_
@@ -53,6 +56,7 @@ class Monitor {
    * @brief Construct the monitor with the source of the monitor messages. The
    * source is usually the module name who publish the monitor messages.
    * @param source the source of the monitor messages.
+   * 构造函数 创建一个消息项，指定message来源哪一个模块。
    */
   explicit Monitor(const MonitorMessageItem::MessageSource& source)
       : source_(source) {}
@@ -60,6 +64,7 @@ class Monitor {
   /**
    * @brief Publish the messages.
    * @param messages a list of messages for
+   * 组合多条消息，并发布到相关的topic。
    */
   virtual void Publish(const std::vector<MessageItem>& messages) const;
 

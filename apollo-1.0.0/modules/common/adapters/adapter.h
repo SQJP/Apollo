@@ -16,6 +16,11 @@
 
 /**
  * @file
+ * Adapter是来自传感器的底层数据和Apollo各个模块交互的统一接口。(c++ 适配器模式)
+ *  使得Apollo各个模块不强依赖于ROS框架:将数据IO抽象。上层是Apollo框架，底层是data IO，
+ * 二者松耦合。Adapter持有一段时间内的所有历史数据，
+ * 因此所有的模块可获取这些数据而无需使用ROS通信机制进行数据交换(提高通信效率)。
+ * 模板参数可以是message消息类型，不一定是传感器数据。
  */
 
 #ifndef MODULES_ADAPTERS_ADAPTER_H_
@@ -40,6 +45,11 @@
 /**
  * @namespace apollo::common::adapter
  * @brief apollo::common::adapter
+ * Adapter是来自传感器的底层数据和Apollo各个模块交互的统一接口。
+ * (c++ 适配器模式) 使得Apollo各个模块不强依赖于ROS框架:将数据IO抽象。
+ * 上层是Apollo框架，底层是data IO，二者松耦合。Adapter持有一段时间内的所有历史数据，
+ * 因此所有的模块可获取这些数据而无需使用ROS通信机制进行数据交换(提高通信效率)。
+ * 模板参数可以是message消息类型，不一定是传感器数据。
  */
 namespace apollo {
 namespace common {
@@ -86,6 +96,10 @@ class Adapter {
    * @param message_num the number of historical messages that the
    * adapter stores. Older messages will be removed upon calls to
    * Adapter::OnReceive().
+   * 构造函数初始化成员变量：
+   * std::string topic_name_需要监听的ROS的话题名称，message的来源topic
+   * size_t message_num_ 数据队列的最大容量
+   * std::list<std::shared_ptr<D>> data_queue_接收的数据队列，原始数据。该部分数据尚未进行观测
    */
   Adapter(const std::string &adapter_name, const std::string &topic_name,
           size_t message_num, const std::string &dump_dir = "/tmp")
@@ -110,6 +124,7 @@ class Adapter {
 
   /**
    * @brief returns the topic name that this adapter listens to.
+   * 返回监听的话题名称
    */
   const std::string &topic_name() const { return topic_name_; }
 
@@ -118,6 +133,7 @@ class Adapter {
    * the adapter's data queue.
    * @param message_file the path to the file that contains a (usually
    * proto) message of DataType.
+   * 从proto文件读取data
    */
   void FeedProtoFile(const std::string &message_file) {
     D data;
@@ -130,6 +146,8 @@ class Adapter {
    * @brief push (a copy of) the input data into the data queue of
    * the adapter.
    * @param data the input data.
+   * 将输入数据推送（复制）到数据队列中
+   * 
    */
   void FeedProto(const D &data) {
     auto data_ptr = std::make_shared<D>(data);
@@ -140,6 +158,7 @@ class Adapter {
    * @brief the callback that will be invoked whenever a new
    * message is received.
    * @param message the newly received message.
+   * 接收原始数据data。并调用相关回调函数
    */
   void OnReceive(const D &message) {
     auto data_ptr = std::make_shared<D>(message);
@@ -151,6 +170,7 @@ class Adapter {
   /**
    * @brief copy the data_queue_ into the observing queue to create a
    * view of data up to the call time for the user.
+   * 进行一次观察/测量。只有调用了Observe()，接收的数据才能被有效处理。
    */
   void Observe() {
     std::lock_guard<std::mutex> lock(mutex_);
@@ -159,6 +179,7 @@ class Adapter {
 
   /**
    * @brief returns TRUE if the observing queue is empty.
+   * 查看观看队列是否为空
    */
   bool Empty() const {
     std::lock_guard<std::mutex> lock(mutex_);
@@ -171,6 +192,7 @@ class Adapter {
    * /note
    * Please call Empty() to make sure that there is data in the
    * queue before calling GetOldestObserved().
+   * 获取观测集中的最新值 
    */
   const D &GetLatestObserved() const {
     std::lock_guard<std::mutex> lock(mutex_);
@@ -187,6 +209,7 @@ class Adapter {
    * /note
    * Please call Empty() to make sure that there is data in the
    * queue before calling GetOldestObserved().
+   * 获取观察集中的过时的信息
    */
   const D &GetOldestObserved() const {
     std::lock_guard<std::mutex> lock(mutex_);
@@ -200,6 +223,7 @@ class Adapter {
    * @brief returns an iterator representing the head of the observing
    * queue. The caller can use it to iterate over the observed data
    * from the head. The API also supports range based for loop.
+   * 迭代器模式指向观测数据集。支持for循环。
    */
   Iterator begin() const { return observed_queue_.begin(); }
 
@@ -215,12 +239,15 @@ class Adapter {
    * so that the callback function will be called once right after the
    * message hits the adapter.
    * @param callback the callback with signature void(const D &).
+   * 将提供的回调函数注册到适配器，以便在消息到达适配器后立即调用回调函数。
+   * 设置消息到达时的回调函数。
    */
   void SetCallback(Callback callback) { receive_callback_ = callback; }
 
   /**
    * @brief fills the fields module_name, timestamp_sec and
    * sequence_num in the header.
+   * 填充标题中的字段module_name，timestamp_sec和sequence_num。
    */
   void FillHeader(const std::string &module_name,
                   apollo::common::Header *header) {
@@ -233,6 +260,7 @@ class Adapter {
 
  private:
   // HasSequenceNumber returns false for non-proto-message data types.
+  //对于非原型消息数据类型，返回false。
   template <typename InputMessageType>
   static bool HasSequenceNumber(
       typename std::enable_if<

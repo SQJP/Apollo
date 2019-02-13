@@ -17,6 +17,7 @@
 /**
  * @file
  * @brief Defines the StringTokenizer class
+ * StringTokenizer类主要目的是使用特定的分割符将字符串分割成多个部分。作用与python的字符串分割函数split()类似。默认分割符是" " 
  */
 
 #ifndef MODULES_COMMON_UTIL_STRING_TOKENIZER_H_
@@ -58,6 +59,7 @@ class StringTokenizer {
    * @param delims Delimiters where the string should be split
    * @return A vector of tokens, each a substring of str
    * surrounded by delimiters.
+   * 使用分隔符delims对给定的字符串str进行分割。分割结果可以用 Next()成员函数访问;
    */
   static std::vector<std::string> Split(const std::string& str,
                                         const std::string& delims);

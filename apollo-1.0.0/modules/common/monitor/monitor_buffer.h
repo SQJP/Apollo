@@ -17,6 +17,7 @@
 /**
  * @file monitor_buffer.h
  * @brief The class of MonitorBuffer
+ * MonitorBuffer主要用于缓存多条log的消息日志。将多个相同level的log组合到一起。避免冗余信息。 不同level的log，将不会被组合。但是相同level的log日志将被组合到一起。
  */
 
 #ifndef MODULES_MONITOR_MONITOR_BUFFER_H_
@@ -65,6 +66,7 @@ class MonitorBuffer {
   /**
    * @brief The constructor of MonitorBuffer.
    * @param a Monitor instance pointer;
+   * 构造函数
    */
   explicit MonitorBuffer(Monitor* monitor);
 
@@ -72,11 +74,13 @@ class MonitorBuffer {
 
   /**
    * @brief print a log trace for the last recorded message.
+   * 将monitor_msg_items_的尾部消息输出。
    */
   void PrintLog();
 
   /**
    * @brief record an INFO type message
+   * 注册INFO级别的log
    */
   REG_MSG_TYPE(INFO);
 
@@ -99,6 +103,7 @@ class MonitorBuffer {
    * @brief Add monitor message with MonitorMessageItem::LogLevel
    * @param log_level defined in modules/common/monitor/proto/monitor.proto
    * @param msg the string to send to monitor
+   * 添加一个msgitem：level+msg.
    */
   void AddMonitorMsgItem(const MonitorMessageItem::LogLevel log_level,
                          const std::string& msg);
@@ -119,6 +124,7 @@ class MonitorBuffer {
 
   /**
    * @brief overload operator << to help join string messages
+   * 重载<<运算符,将msg写入MonitorBuffer。level是当前的level_
    */
   MonitorBuffer& operator<<(const std::string& msg);
 
@@ -129,6 +135,8 @@ class MonitorBuffer {
 
   /**
    * @brief publish the monitor messages
+   * 调用monitor的成员函数Publish(),发布消息
+   * 
    */
   void Publish();
 

@@ -39,6 +39,7 @@ namespace util {
  * @param pattern The target pattern. To see if the original string ends
  *        with it.
  * @return Whether the original string ends with the specified pattern.
+ * 当original字符串以 pattern 结尾时，返回true
  */
 bool EndWith(const std::string& original, const std::string& pattern);
 

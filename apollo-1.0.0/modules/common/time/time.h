@@ -146,6 +146,7 @@ inline Timestamp From(double timestamp_value) {
  * timestamp. The source can be either system clock or a mock clock.
  * Mock clock is for testing purpose mainly. The mock clock related
  * methods are not thread-safe.
+ * Clock是封装c++ 11 chrono后抽象的时钟计时类class。是线程安全的单例模式(c++ 11的语法可确保)。
  */
 class Clock {
  public:
@@ -161,6 +162,7 @@ class Clock {
   /**
    * @brief gets the current timestamp.
    * @return a Timestamp object representing the current time.
+   * 返回当前时间的最新值。
    */
   static Timestamp Now() {
     return Clock::instance()->is_system_clock_ ? SystemNow()
@@ -172,6 +174,7 @@ class Clock {
    * @param is_system_clock if provided with value TRUE, further call
    * to Now() will return timestamp based on the system clock. If
    * provided with FALSE, it will use the mock clock instead.
+   * 设置是否使用模拟时间。
    */
   static void UseSystemClock(bool is_system_clock) {
     Clock::instance()->is_system_clock_ = is_system_clock;
@@ -180,12 +183,14 @@ class Clock {
   /**
    * @brief Check whether the \class Clock instance is using system clock.
    * @return TRUE if it is using system clock, and FALSE otherwise.
+   * 返回是否使用系统时间。
    */
   static bool IsSystemClock() { return Clock::instance()->is_system_clock_; }
 
   /**
    * @brief This is for mock clock mode only. It will set the timestamp
    * for the mock clock.
+   * 当Clock使用mock时间时，将系统时间设定为给定值。否则抛出运行时错误。（只有模拟时间才可调整值，系统时间不可调整）
    */
   static void SetNow(const Duration &duration) {
     Clock *clock = Clock::instance();
@@ -218,11 +223,11 @@ class Clock {
 
   /// Indicates whether it is in the system clock mode or the mock
   /// clock mode.
-  bool is_system_clock_;
+  bool is_system_clock_;//true表示系统时间，false表示模拟时间
 
   /// Stores the currently set timestamp, which serves mock clock
   /// queries.
-  Timestamp mock_now_;
+  Timestamp mock_now_;//模拟时间的当前值。为啥要标记模拟时间?:为了仿真训练。多次仿真，反复训练。 
 
   /// Explicitly disable default and move/copy constructors.
   DECLARE_SINGLETON(Clock);

@@ -120,7 +120,7 @@ void apollo_app_sigint_handler(int signal_num);
 
 }  // namespace common
 }  // namespace apollo
-
+//最后本文件还有一个宏定义方便各个模块运行。
 #define APOLLO_MAIN(APP)                                       \
   int main(int argc, char **argv) {                            \
     google::InitGoogleLogging(argv[0]);                        \
