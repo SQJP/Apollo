@@ -20,6 +20,7 @@
  * @brief This library provides the utilities to deal with timestamps.
  * currently our assumption is that every timestamp will be of a
  * precision at 1us.
+ * apollo内部使用c++ 11的 chrono库作为时间管理工具。默认精度是纳秒(1e-9). 
  */
 #ifndef MODULES_COMMON_TIME_TIME_H_
 #define MODULES_COMMON_TIME_TIME_H_
@@ -42,6 +43,7 @@ namespace time {
 /**
  * @class Duration
  * @brief the default Duration is of precision nanoseconds (1e-9
+ * Duration,1纳秒，1e-9s
  * seconds).
  */
 using Duration = std::chrono::nanoseconds;
@@ -50,6 +52,7 @@ using Duration = std::chrono::nanoseconds;
  * @class Timestamp
  * @brief the default timestamp uses std::chrono::system_clock. The
  * system_clock is a system-wide realtime clock.
+ * Timestamp,以纳秒ns为单位的时间点
  */
 using Timestamp = std::chrono::time_point<std::chrono::system_clock, Duration>;
 
@@ -69,6 +72,7 @@ using hours = std::chrono::hours;
  * @param duration the input duration that needs to be converted to
  * integer.
  * @return an integer representing the duration in the specified unit.
+ * 将纳秒ns转换为以PrecisionDuration为精度单位计的int64整数
  */
 template <typename PrecisionDuration>
 int64_t AsInt64(const Duration &duration) {
@@ -81,6 +85,7 @@ int64_t AsInt64(const Duration &duration) {
  * @param timestamp the input timestamp that needs to be converted to
  * integer.
  * @return an integer representing the timestamp in the specified unit.
+ * 将Timestamp(时间点)转换为64位整数表示。
  */
 template <typename PrecisionDuration>
 int64_t AsInt64(const Timestamp &timestamp) {
@@ -92,7 +97,9 @@ int64_t AsInt64(const Timestamp &timestamp) {
  * The original precision will be preserved.
  * @param duration the input duration that needs to be converted.
  * @return a doule in seconds.
+ * 将纳秒ns转换为秒s
  */
+
 inline double ToSecond(const Duration &duration) {
   return static_cast<double>(AsInt64<nanos>(duration)) * 1e-9;
 }
@@ -102,6 +109,7 @@ inline double ToSecond(const Duration &duration) {
  * The original precision will be preserved.
  * @param timestamp the input timestamp that needs to be converted.
  * @return a doule representing the same timestamp in seconds.
+ * 将以纳秒表示的时间点ns转换为秒s
  */
 inline double ToSecond(const Timestamp &timestamp) {
   return static_cast<double>(AsInt64<nanos>(timestamp.time_since_epoch())) *
@@ -112,6 +120,7 @@ inline double ToSecond(const Timestamp &timestamp) {
  * @brief converts the integer-represented timestamp to \class
  * Timestamp.
  * @return a Timestamp object.
+ * 将以PrecisionDuration为精度计的int64整数转换为Timestamp(时间点)。
  */
 template <typename PrecisionDuration>
 inline Timestamp FromInt64(int64_t timestamp_value) {
@@ -123,6 +132,7 @@ inline Timestamp FromInt64(int64_t timestamp_value) {
  * @brief converts the double to \class Timestamp. The input double has
  * a unit of seconds.
  * @return a Timestamp object.
+ * 将秒s转换为时间点Timestamp。即FromInt64的特化版本：先将时间转换为ns计的64位整数nanos_value，再转换为Timestamp。
 */
 
 inline Timestamp From(double timestamp_value) {
