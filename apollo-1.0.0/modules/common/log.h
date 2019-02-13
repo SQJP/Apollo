@@ -16,6 +16,7 @@
 
 /**
  * @file
+ * apollo内部使用谷歌的glog作为日志库。 有5个日志级别，分别是DEBUG，INFO，WARNING，ERROR，FATAL。
  */
 
 #ifndef MODULES_COMMON_LOG_H_
